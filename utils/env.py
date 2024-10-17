@@ -15,7 +15,7 @@ class Environment:
         self.airtable_base_id = os.environ.get("AIRTABLE_BASE_ID")
 
         self.port = int(os.environ.get("PORT", 3000))
-    
+
         if not self.slack_bot_token:
             raise Exception("SLACK_BOT_TOKEN is not set")
         if not self.slack_signing_secret:
@@ -33,10 +33,10 @@ class Environment:
             api_key=self.airtable_api_key, base_id=self.airtable_base_id
         )
         self.authorised_users = [
-            "U054VC2KM9P", # Dillon
-            "U0409FSKU82", # Arpan
-            "U01MPHKFZ7S", # Arav
-            "UDK5M9Y13", # Chris
+            "U054VC2KM9P",  # Dillon
+            "U0409FSKU82",  # Arpan
+            "U01MPHKFZ7S",  # Arav
+            "UDK5M9Y13",  # Chris
         ]
 
 
