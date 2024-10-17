@@ -30,7 +30,7 @@ def handle_create_event_view(ack: Callable, body: dict[str, Any], client: WebCli
 
     client.chat_postMessage(
         channel=env.slack_approval_channel,
-        text=f"New event request by <@{body["user"]["id"]}!\nTitle: {title[0]}\nDescription: {description[0]}\nStart Time: {start_time[0]}\nEnd Time: {end_time[0]}",
+        text=f"New event request by <@{body['user']['id']}!\nTitle: {title[0]}\nDescription: {description[0]}\nStart Time: {start_time[0]}\nEnd Time: {end_time[0]}",
         blocks=[
             {
     "type": "section",
