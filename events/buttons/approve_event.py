@@ -34,7 +34,7 @@ def handle_approve_event_btn(ack: Callable, body: dict[str, Any], client: WebCli
         inclusive=True,
         
     )
-    blocks = message['messages'][0]['blocks'] + [
+    blocks =[ message['messages'][0]['blocks'][0], 
         {
             "type": "context",
             "elements": [
@@ -44,8 +44,8 @@ def handle_approve_event_btn(ack: Callable, body: dict[str, Any], client: WebCli
                 }
             ]
         }
+    
     ]
-
     client.chat_update(
         channel=env.slack_approval_channel,
         ts=ts,

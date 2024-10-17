@@ -38,16 +38,22 @@ def handle_create_event_view(ack: Callable, body: dict[str, Any], client: WebCli
         "type": "mrkdwn",
         "text": f"New event request by <@{body['user']['id']}>!\n*Title:* {title[0]}\n*Description:* {description[0]}\n*Start Time (local time):* <!date^{start_time[0]}^{{date_num}} at {{time_secs}}|{fallback_start_time}>\n*End Time (local time):* <!date^{end_time[0]}^{{date_num}} at {{time_secs}}|{fallback_end_time}>",
     }, 
-    "accessory": {
-        "type": "button",
-        "text": {
-            "type": "plain_text",
-            "text": "Approve",
-            "emoji": True
-        },
-        "value": event["id"],
-        "action_id": "approve-event"
-    }
+},
+{
+    "type": "actions",
+    "elements": [
+        {
+            "type": "button",
+            "text": {
+                "type": "plain_text",
+                "text": "Approve",
+                "emoji": True
+            },
+            "style": "primary",
+            "value": event["id"],
+            "action_id": "approve-event"
+        }
+    ]
 }
         ]
     )
