@@ -8,7 +8,6 @@ from typing import Any, Callable
 
 def handle_create_event_cmd(ack: Callable, body: dict[str, Any], client: WebClient):
     ack()
-    print(f'Called by {body["user_id"]}')
     sad_members = client.conversations_members(channel=env.slack_sad_channel)["members"]
 
     if body["user_id"] not in sad_members:

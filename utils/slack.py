@@ -13,6 +13,7 @@ app = App(token=env.slack_bot_token, signing_secret=env.slack_signing_secret)
 
 # create a command
 @app.command("/create-event")
+@app.command("/create-event-dev")
 def create_event(ack: Callable, body: dict[str, Any], client: WebClient):
     handle_create_event_cmd(ack, body, client)
 

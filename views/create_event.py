@@ -42,5 +42,23 @@ def get_create_event_modal():
                 "element": {"type": "datetimepicker", "action_id": "end_time"},
                 "label": {"type": "plain_text", "text": "End Time", "emoji": True},
             },
+            {
+			"type": "input",
+            "block_id": "host",
+			"element": {
+				"type": "users_select",
+				"placeholder": {
+					"type": "plain_text",
+					"text": "Select a host",
+					"emoji": True
+				},
+				"action_id": "host",
+			},
+			"label": {
+				"type": "plain_text",
+				"text": "Host",
+				"emoji": True
+			}
+		}
         ],
     }
