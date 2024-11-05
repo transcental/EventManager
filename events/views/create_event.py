@@ -34,7 +34,9 @@ def handle_create_event_view(ack: Callable, body: dict[str, Any], client: WebCli
     ).isoformat()
     fallback_end_time = datetime.fromtimestamp(end_time[0], timezone.utc).isoformat()
 
-    host_str = f"<@{body['user']['id']}> {f"for <@{host_id}>" if host_id != body['user']['id'] else ''}"
+    user_id = body.get("user", {}).get("id", "")
+    host_mention = f"for <@{host_id}>" if host_id != user_id else ""
+    host_str = f"<@{user_id}> {host_mention}"
 
     client.chat_postMessage(
         channel=env.slack_approval_channel,
