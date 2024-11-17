@@ -2,15 +2,16 @@ from slack_sdk import WebClient
 
 from views.create_event import get_create_event_modal
 from utils.env import env
+from utils.utils import user_in_safehouse
 
 from typing import Any, Callable
 
 
 def handle_create_event_cmd(ack: Callable, body: dict[str, Any], client: WebClient):
     ack()
-    sad_members = client.conversations_members(channel=env.slack_sad_channel)["members"]
+    sad_member = user_in_safehouse(body["user_id"])
 
-    if body["user_id"] not in sad_members:
+    if not sad_member:
         client.chat_postEphemeral(
             channel=body["channel_id"],
             user=body["user_id"],

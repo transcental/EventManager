@@ -20,7 +20,7 @@ def handle_create_event_view(ack: Callable, body: dict[str, Any], client: WebCli
     host_pfp = user["user"]["profile"]["image_192"]
 
     event = env.airtable.create_event(
-        title[0], description[0], start_time[0], end_time[0], host_name, host_pfp
+        title[0], description[0], start_time[0], end_time[0], host_id, host_name, host_pfp
     )
     if not event:
         client.chat_postEphemeral(

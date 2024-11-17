@@ -33,10 +33,11 @@ class Environment:
             api_key=self.airtable_api_key, base_id=self.airtable_base_id
         )
         self.authorised_users = [
-            "U054VC2KM9P",  # Dillon
+            "U054VC2KM9P",  # Amber
             "U0409FSKU82",  # Arpan
-            "U01MPHKFZ7S",  # Arav
-            "UDK5M9Y13",  # Chris
+            "U01MPHKFZ7S",  # Aarya
+            "UDK5M9Y13",    # Chris
+            "U06QST7V0J2", # Eesha
         ]
 
 

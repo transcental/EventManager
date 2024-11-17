@@ -8,12 +8,14 @@ class AirtableManager:
         self.events_table = api.table(base_id, "Events")
         print("Connected to Airtable")
 
+
     def create_event(
         self,
         title: str,
         description: str,
         start_time: str,
         end_time: str,
+        host_id: str,
         host_name: str,
         host_pfp: str,
     ):
@@ -25,6 +27,7 @@ class AirtableManager:
                     start_time, timezone.utc
                 ).isoformat(),
                 "End Time": datetime.fromtimestamp(end_time, timezone.utc).isoformat(),
+                "Leader Slack ID": host_id,
                 "Leader": host_name,
                 "Avatar": [{"url": host_pfp}],
                 "Approved": False,
@@ -32,10 +35,26 @@ class AirtableManager:
         )
         return event
 
+
     def get_event(self, id: str):
         user = self.events_table.first(formula=f'{{id}} = "{id}"')
         return user
+    
 
+    def get_all_events(self, unapproved: bool = False):
+        events = self.events_table.all()
+        if not unapproved:
+            events = [event for event in events if event['fields'].get("Approved", False)]
+        events = sorted(events, key=lambda event: event['fields']["Start Time"])
+        return events
+    
+    
+    def get_upcoming_events(self):
+        events = self.events_table.all(view="Future Events")
+        events = [event for event in events if event['fields'].get("Approved", False)]
+        return events
+
+    
     def update_event(
         self,
         id: str | None = None,
