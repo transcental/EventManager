@@ -27,6 +27,11 @@ For the Slack app, here is the manifest you will need. Make sure to change the c
         "name": "Event Manager"
     },
     "features": {
+        "app_home": {
+            "home_tab_enabled": true,
+            "messages_tab_enabled": false,
+            "messages_tab_read_only_enabled": true
+        },
         "bot_user": {
             "display_name": "Event Manager",
             "always_online": false
@@ -34,7 +39,7 @@ For the Slack app, here is the manifest you will need. Make sure to change the c
         "slash_commands": [
             {
                 "command": "/create-event",
-                "url": "https://eventmanager.dillon.hackclub.app/slack/events",
+                "url": "https://cassiopeia3000.transcental.dev/slack/events",
                 "description": "Create an event for events.hackclub.com",
                 "should_escape": false
             }
@@ -54,16 +59,21 @@ For the Slack app, here is the manifest you will need. Make sure to change the c
         }
     },
     "settings": {
+        "event_subscriptions": {
+            "request_url": "https://cassiopeia3000.transcental.dev/slack/events",
+            "bot_events": [
+                "app_home_opened"
+            ]
+        },
         "interactivity": {
             "is_enabled": true,
-            "request_url": "https://eventmanager.dillon.hackclub.app/slack/events"
+            "request_url": "https://cassiopeia3000.transcental.dev/slack/events"
         },
         "org_deploy_enabled": false,
         "socket_mode_enabled": false,
         "token_rotation_enabled": false
     }
-}
-```
+}```
 
 To actually run the bot, you can use the following commands:
 
