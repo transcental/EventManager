@@ -1,7 +1,6 @@
 from slack_sdk import WebClient
 
 from views.create_event import get_create_event_modal
-from utils.env import env
 from utils.utils import user_in_safehouse
 
 from typing import Any, Callable

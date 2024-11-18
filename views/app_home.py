@@ -38,7 +38,7 @@ def get_home(user_id: str):
 						"emoji": True
 					},
                     "style": "primary",
-					"value": "approve-event",
+					"value": event['id'],
 					"action_id": "approve-event"
 				})
         if user_id == event['fields']['Leader Slack ID'] or admin:
@@ -50,8 +50,8 @@ def get_home(user_id: str):
 						"text": "Edit",
 						"emoji": True
 					},
-					"value": "edit",
-					"action_id": "edit"
+					"value": "edit-event",
+					"action_id": "edit-event"
 				})
         if not user_id == event['fields']['Leader Slack ID']:
             buttons.append(
@@ -65,11 +65,8 @@ def get_home(user_id: str):
 					"value": "rsvp",
 					"action_id": "rsvp"
 				})
-        upcoming_events_blocks.append({
-			"type": "actions",
-			"elements": [
-				*buttons,
-				{
+        if event['fields'].get('Approved', False):
+            buttons.append({
 					"type": "button",
 					"text": {
 						"type": "plain_text",
@@ -78,7 +75,11 @@ def get_home(user_id: str):
 					},
 					"value": "more-info",
 					"action_id": "more-info"
-				},
+				})
+        upcoming_events_blocks.append({
+			"type": "actions",
+			"elements": [
+				*buttons
 			]
 		})
 
@@ -94,12 +95,8 @@ def get_home(user_id: str):
 				}
 			},
 			{
-				"type": "section",
-				"text": {
-					"type": "mrkdwn",
-					"text": "*Upcoming*"
-				},
-				"accessory": {
+				"type": "actions",
+				"elements": [{
 					"type": "button",
 					"text": {
 						"type": "plain_text",
@@ -107,19 +104,13 @@ def get_home(user_id: str):
 						"emoji": True
 					},
 					"value": "host-event",
-					"action_id": "request-to-host-event"
+					"action_id": "create-event" if sad_member else "propose-event"
 				}
+				],
 			},
 			*upcoming_events_blocks,
 			{
 				"type": "divider"
-			},
-			{
-				"type": "section",
-				"text": {
-					"type": "mrkdwn",
-					"text": "*Past*"
-				}
 			}
 		]
 	}
