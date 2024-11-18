@@ -73,7 +73,8 @@ For the Slack app, here is the manifest you will need. Make sure to change the c
         "socket_mode_enabled": false,
         "token_rotation_enabled": false
     }
-}```
+}
+```
 
 To actually run the bot, you can use the following commands:
 
