@@ -100,7 +100,7 @@ def get_home(user_id: str):
 					"type": "button",
 					"text": {
 						"type": "plain_text",
-						"text": "Host an Event",
+						"text": "Create Event" if sad_member else "Propose Event",
 						"emoji": True
 					},
 					"value": "host-event",
