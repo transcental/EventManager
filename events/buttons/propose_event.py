@@ -7,4 +7,5 @@ from typing import Any, Callable
 
 def handle_propose_event_btn(ack: Callable, body: dict[str, Any], client: WebClient):
     ack()
-    client.views_open(view=get_propose_event_modal(), trigger_id=body["trigger_id"])
+    user_id = body["user"]["id"]
+    client.views_open(view=get_propose_event_modal(user_id), trigger_id=body["trigger_id"])

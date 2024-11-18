@@ -1,4 +1,4 @@
-def get_create_event_modal():
+def get_create_event_modal(user_id: str):
     return {
         "type": "modal",
         "callback_id": "create_event",
@@ -52,6 +52,7 @@ def get_create_event_modal():
 					"text": "Select a host",
 					"emoji": True
 				},
+                "initial_user": user_id,
 				"action_id": "host",
 			},
 			"label": {

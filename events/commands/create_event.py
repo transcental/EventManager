@@ -8,7 +8,8 @@ from typing import Any, Callable
 
 def handle_create_event_cmd(ack: Callable, body: dict[str, Any], client: WebClient):
     ack()
-    sad_member = user_in_safehouse(body["user_id"])
+    user_id = body["user_id"]
+    sad_member = user_in_safehouse(user_id)
 
     if not sad_member:
         client.chat_postEphemeral(
@@ -18,4 +19,4 @@ def handle_create_event_cmd(ack: Callable, body: dict[str, Any], client: WebClie
         )
         return
 
-    client.views_open(view=get_create_event_modal(), trigger_id=body["trigger_id"])
+    client.views_open(view=get_create_event_modal(user_id), trigger_id=body["trigger_id"])
