@@ -90,7 +90,7 @@ def get_home(user_id: str):
 				"type": "header",
 				"text": {
 					"type": "plain_text",
-					"text": "Events",
+					"text": "Upcoming Events",
 					"emoji": True
 				}
 			},
