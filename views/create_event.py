@@ -2,7 +2,7 @@ def get_create_event_modal():
     return {
         "type": "modal",
         "callback_id": "create_event",
-        "title": {"type": "plain_text", "text": "Create Event", "emoji": True},
+        "title": {"type": "plain_text", "text": "Add Event", "emoji": True},
         "submit": {"type": "plain_text", "text": "Submit", "emoji": True},
         "close": {"type": "plain_text", "text": "Cancel", "emoji": True},
         "blocks": [
