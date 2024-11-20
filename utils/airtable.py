@@ -9,7 +9,6 @@ class AirtableManager:
         self.users_table = api.table(base_id, "Users")
         print("Connected to Airtable")
 
-
     def create_event(
         self,
         title: str,
@@ -35,32 +34,29 @@ class AirtableManager:
             }
         )
         return event
-    
 
     def update_event(self, id: str, **updates: dict):
         event = self.events_table.update(id, updates)
         return event
 
-
     def get_event(self, id: str):
         user = self.events_table.get(id)
         return user
-    
 
     def get_all_events(self, unapproved: bool = False):
         events = self.events_table.all()
         if not unapproved:
-            events = [event for event in events if event['fields'].get("Approved", False)]
-        events = sorted(events, key=lambda event: event['fields']["Start Time"])
-        return events
-    
-    
-    def get_upcoming_events(self):
-        events = self.events_table.all(view="Future Events")
-        events = [event for event in events if event['fields'].get("Approved", False)]
+            events = [
+                event for event in events if event["fields"].get("Approved", False)
+            ]
+        events = sorted(events, key=lambda event: event["fields"]["Start Time"])
         return events
 
-    
+    def get_upcoming_events(self):
+        events = self.events_table.all(view="Future Events")
+        events = [event for event in events if event["fields"].get("Approved", False)]
+        return events
+
     def update_event(
         self,
         id: str | None = None,

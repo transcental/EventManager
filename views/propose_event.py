@@ -27,15 +27,10 @@ def get_propose_event_modal(user_id: str):
                     "type": "rich_text_input",
                     "action_id": "description",
                     "dispatch_action_config": {
-                        "trigger_actions_on": [
-                        "on_character_entered"
-                        ]
+                        "trigger_actions_on": ["on_character_entered"]
                     },
                     "focus_on_load": False,
-                    "placeholder": {
-                        "type": "plain_text",
-                        "text": "Enter text"
-                    }
+                    "placeholder": {"type": "plain_text", "text": "Enter text"},
                 },
                 "label": {"type": "plain_text", "text": "Description", "emoji": True},
             },
@@ -52,23 +47,19 @@ def get_propose_event_modal(user_id: str):
                 "label": {"type": "plain_text", "text": "End Time", "emoji": True},
             },
             {
-			"type": "input",
-            "block_id": "host",
-			"element": {
-				"type": "users_select",
-				"placeholder": {
-					"type": "plain_text",
-					"text": "Select a host",
-					"emoji": True
-				},
-                "initial_user": user_id,
-				"action_id": "host",
-			},
-			"label": {
-				"type": "plain_text",
-				"text": "Host",
-				"emoji": True
-			}
-		}
+                "type": "input",
+                "block_id": "host",
+                "element": {
+                    "type": "users_select",
+                    "placeholder": {
+                        "type": "plain_text",
+                        "text": "Select a host",
+                        "emoji": True,
+                    },
+                    "initial_user": user_id,
+                    "action_id": "host",
+                },
+                "label": {"type": "plain_text", "text": "Host", "emoji": True},
+            },
         ],
     }

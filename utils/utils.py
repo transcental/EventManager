@@ -44,8 +44,14 @@ def rich_text_to_md(input_data, indent_level=0, in_quote=False):
         elif isinstance(block, dict) and block["type"] == "rich_text_list":
             for item in block["elements"]:
                 prefix = "> " if in_quote else ""
-                markdown += "  " * indent_level + prefix + f"- {parse_elements(item['elements'])}\n"
+                markdown += (
+                    "  " * indent_level
+                    + prefix
+                    + f"- {parse_elements(item['elements'])}\n"
+                )
                 # Recursively parse nested lists
                 if "elements" in item:
-                    markdown += rich_text_to_md(item["elements"], indent_level + 1, in_quote)
+                    markdown += rich_text_to_md(
+                        item["elements"], indent_level + 1, in_quote
+                    )
     return markdown

@@ -9,7 +9,7 @@ from typing import Any, Callable
 def handle_approve_event_btn(ack: Callable, body: dict[str, Any], client: WebClient):
     ack()
     user_id = body["user"]["id"]
-    
+
     if user_id not in env.authorised_users:
         client.chat_postEphemeral(
             user=user_id,
@@ -17,7 +17,7 @@ def handle_approve_event_btn(ack: Callable, body: dict[str, Any], client: WebCli
             text="You are not authorised to approve events.",
         )
         return
-    
+
     value = body["actions"][0]["value"]
 
     event = env.airtable.get_event(value)
@@ -38,9 +38,7 @@ def handle_approve_event_btn(ack: Callable, body: dict[str, Any], client: WebCli
         )
         return
 
-    event = env.airtable.update_event(value, **{
-        "Approved": True
-    })
+    event = env.airtable.update_event(value, **{"Approved": True})
 
     client.chat_postMessage(
         user=body["user"]["id"],
@@ -48,7 +46,4 @@ def handle_approve_event_btn(ack: Callable, body: dict[str, Any], client: WebCli
         text=f"<@{user_id}> approved {event['fields']['Title']} for <@{event['fields']['Leader Slack ID']}>.",
     )
 
-    client.views_publish(
-        user_id=user_id,
-        view=get_home(user_id)
-    )
+    client.views_publish(user_id=user_id, view=get_home(user_id))

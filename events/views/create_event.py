@@ -51,5 +51,5 @@ def handle_create_event_view(ack: Callable, body: dict[str, Any], client: WebCli
                     "text": f"New event request by {host_str}!\n*Title:* {title[0]}\n*Description:* {md}\n*Start Time (local time):* <!date^{start_time[0]}^{{date_num}} at {{time_secs}}|{fallback_start_time}>\n*End Time (local time):* <!date^{end_time[0]}^{{date_num}} at {{time_secs}}|{fallback_end_time}>",
                 },
             }
-        ]
+        ],
     )

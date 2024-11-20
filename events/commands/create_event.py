@@ -18,11 +18,13 @@ def handle_create_event_cmd(ack: Callable, body: dict[str, Any], client: WebClie
             text="You are not authorised to create events. If you want to propose one, visit my app home page.",
         )
         return
-        
+
     client.chat_postEphemeral(
         channel=body["channel_id"],
         user=body["user_id"],
         text="*Note: this command will be removed soon*. Please use my app home page to add an event.",
     )
-    
-    client.views_open(view=get_create_event_modal(user_id), trigger_id=body["trigger_id"])
+
+    client.views_open(
+        view=get_create_event_modal(user_id), trigger_id=body["trigger_id"]
+    )
