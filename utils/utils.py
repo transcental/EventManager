@@ -1,5 +1,7 @@
 from .env import env
 
+import re
+
 from slack_sdk import WebClient
 
 client = WebClient(token=env.slack_bot_token)
@@ -55,3 +57,28 @@ def rich_text_to_md(input_data, indent_level=0, in_quote=False):
                         item["elements"], indent_level + 1, in_quote
                     )
     return markdown
+
+
+def md_to_mrkdwn(md):
+    # Convert bold and italic text (bold first to avoid conflicts)
+    md = re.sub(r"\*\*\*(.*?)\*\*\*", r"***\1***", md)  # Bold and italic
+    md = re.sub(r"\*\*(.*?)\*\*", r"*\1*", md)  # Bold
+    md = re.sub(r"\b\*(.*?)\*\b", r"_\1_", md)  # Italic
+    # Convert strikethrough text
+    md = re.sub(r"~~(.*?)~~", r"~\1~", md)
+    # Convert inline code
+    md = re.sub(r"`(.*?)`", r"`\1`", md)
+    # Convert links
+    md = re.sub(r"\[(.*?)\]\((.*?)\)", r"<\2|\1>", md)
+    # Convert blockquotes
+    md = re.sub(r"^> (.*)", r"> \1", md, flags=re.MULTILINE)
+    # Convert code blocks
+    md = re.sub(r"```(.*?)```", r"```\1```", md, flags=re.DOTALL)
+    # Convert unordered lists
+    md = re.sub(r"^\s*-\s+(.*)", r"• \1", md, flags=re.MULTILINE)
+    # Convert ordered lists
+    md = re.sub(r"^\s*\d+\.\s+(.*)", r"1. \1", md, flags=re.MULTILINE)
+    # Handle nested lists
+    md = re.sub(r"(\n\s*)•", r"\1  •", md)
+    md = re.sub(r"(\n\s*)1\.", r"\1  1.", md)
+    return md

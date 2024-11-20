@@ -3,7 +3,7 @@ from slack_sdk import WebClient
 from datetime import datetime, timezone
 
 from utils.env import env
-from utils.utils import rich_text_to_md
+from utils.utils import rich_text_to_md, md_to_mrkdwn
 
 
 def handle_create_event_view(ack: Callable, body: dict[str, Any], client: WebClient):
@@ -39,16 +39,16 @@ def handle_create_event_view(ack: Callable, body: dict[str, Any], client: WebCli
     user_id = body.get("user", {}).get("id", "")
     host_mention = f"for <@{host_id}>" if host_id != user_id else ""
     host_str = f"<@{user_id}> {host_mention}"
-
+    mrkdwn = md_to_mrkdwn(md)
     client.chat_postMessage(
         channel=env.slack_approval_channel,
-        text=f"New event request by <@{body['user']['id']}>!\nTitle: {title[0]}\nDescription: {md}\nStart Time: {start_time[0]}\nEnd Time: {end_time[0]}",
+        text=f"New event request by <@{body['user']['id']}>!\nTitle: {title[0]}\nDescription: {mrkdwn}\nStart Time: {start_time[0]}\nEnd Time: {end_time[0]}",
         blocks=[
             {
                 "type": "section",
                 "text": {
                     "type": "mrkdwn",
-                    "text": f"New event request by {host_str}!\n*Title:* {title[0]}\n*Description:* {md}\n*Start Time (local time):* <!date^{start_time[0]}^{{date_num}} at {{time_secs}}|{fallback_start_time}>\n*End Time (local time):* <!date^{end_time[0]}^{{date_num}} at {{time_secs}}|{fallback_end_time}>",
+                    "text": f"New event request by {host_str}!\n*Title:* {title[0]}\n*Description:* {mrkdwn}\n*Start Time (local time):* <!date^{start_time[0]}^{{date_num}} at {{time_secs}}|{fallback_start_time}>\n*End Time (local time):* <!date^{end_time[0]}^{{date_num}} at {{time_secs}}|{fallback_end_time}>",
                 },
             }
         ],

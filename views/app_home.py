@@ -1,7 +1,7 @@
 from datetime import datetime, timezone
 
 from utils.env import env
-from utils.utils import user_in_safehouse
+from utils.utils import user_in_safehouse, md_to_mrkdwn
 
 
 def get_home(user_id: str):
@@ -23,12 +23,13 @@ def get_home(user_id: str):
             "%A, %B %d at %I:%M %p"
         )
         formatted_time = f"<!date^{int(datetime.fromisoformat(event['fields']['Start Time']).timestamp())}^{{date_long_pretty}} at {{time}}|{fallback_time}>"
+        mrkdwn = md_to_mrkdwn(event["fields"]["Description"])
         upcoming_events_blocks.append(
             {
                 "type": "section",
                 "text": {
                     "type": "mrkdwn",
-                    "text": f"{'*[UNAPPROVED]:* ' if not event['fields'].get('Approved', False) else ''}*{event['fields']['Title']}* - <@{event['fields']['Leader Slack ID']}>\n{event['fields']['Description']}\n*{formatted_time}*",
+                    "text": f"{'*[UNAPPROVED]:* ' if not event['fields'].get('Approved', False) else ''}*{event['fields']['Title']}* - <@{event['fields']['Leader Slack ID']}>\n{mrkdwn}\n*{formatted_time}*",
                 },
                 "accessory": {
                     "type": "image",
