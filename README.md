@@ -1,6 +1,6 @@
-# Event Manager
+# Isabelle
 
-This is a bot for the Special Activities Division of Hack Club. It provides an easy way for SAD members to add events to the Hack Club [events website](https://events.hackclub.com).
+Isabelle is a Slack bot for discovering events in the Hack Club Slack. It provides an easy way for SAD members to add events to the Hack Club [events website](https://events.hackclub.com), members to find events and RSVP to event.
 
 ## Usage
 

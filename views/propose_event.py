@@ -24,9 +24,18 @@ def get_propose_event_modal(user_id: str):
                 "type": "input",
                 "block_id": "description",
                 "element": {
-                    "type": "plain_text_input",
-                    "multiline": True,
+                    "type": "rich_text_input",
                     "action_id": "description",
+                    "dispatch_action_config": {
+                        "trigger_actions_on": [
+                        "on_character_entered"
+                        ]
+                    },
+                    "focus_on_load": False,
+                    "placeholder": {
+                        "type": "plain_text",
+                        "text": "Enter text"
+                    }
                 },
                 "label": {"type": "plain_text", "text": "Description", "emoji": True},
             },

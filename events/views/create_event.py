@@ -3,6 +3,7 @@ from slack_sdk import WebClient
 from datetime import datetime, timezone
 
 from utils.env import env
+from utils.utils import rich_text_to_md
 
 
 def handle_create_event_view(ack: Callable, body: dict[str, Any], client: WebClient):
@@ -10,7 +11,8 @@ def handle_create_event_view(ack: Callable, body: dict[str, Any], client: WebCli
     view = body["view"]
     values = view["state"]["values"]
     title = (values["title"]["title"]["value"],)
-    description = (values["description"]["description"]["value"],)
+    description = values["description"]["description"]["rich_text_value"]["elements"]
+    md = rich_text_to_md(description)
     start_time = (values["start_time"]["start_time"]["selected_date_time"],)
     end_time = (values["end_time"]["end_time"]["selected_date_time"],)
     host_id = values["host"]["host"]["selected_user"]
@@ -20,7 +22,7 @@ def handle_create_event_view(ack: Callable, body: dict[str, Any], client: WebCli
     host_pfp = user["user"]["profile"]["image_192"]
 
     event = env.airtable.create_event(
-        title[0], description[0], start_time[0], end_time[0], host_id, host_name, host_pfp
+        title[0], md, start_time[0], end_time[0], host_id, host_name, host_pfp
     )
     if not event:
         client.chat_postEphemeral(
@@ -40,13 +42,13 @@ def handle_create_event_view(ack: Callable, body: dict[str, Any], client: WebCli
 
     client.chat_postMessage(
         channel=env.slack_approval_channel,
-        text=f"New event request by <@{body['user']['id']}>!\nTitle: {title[0]}\nDescription: {description[0]}\nStart Time: {start_time[0]}\nEnd Time: {end_time[0]}",
+        text=f"New event request by <@{body['user']['id']}>!\nTitle: {title[0]}\nDescription: {md}\nStart Time: {start_time[0]}\nEnd Time: {end_time[0]}",
         blocks=[
             {
                 "type": "section",
                 "text": {
                     "type": "mrkdwn",
-                    "text": f"New event request by {host_str}!\n*Title:* {title[0]}\n*Description:* {description[0]}\n*Start Time (local time):* <!date^{start_time[0]}^{{date_num}} at {{time_secs}}|{fallback_start_time}>\n*End Time (local time):* <!date^{end_time[0]}^{{date_num}} at {{time_secs}}|{fallback_end_time}>",
+                    "text": f"New event request by {host_str}!\n*Title:* {title[0]}\n*Description:* {md}\n*Start Time (local time):* <!date^{start_time[0]}^{{date_num}} at {{time_secs}}|{fallback_start_time}>\n*End Time (local time):* <!date^{end_time[0]}^{{date_num}} at {{time_secs}}|{fallback_end_time}>",
                 },
             }
         ]
