@@ -76,6 +76,18 @@ def get_home(user_id: str):
                     "action_id": "more-info",
                 }
             )
+            buttons.append(
+                {
+                    "type": "button",
+                    "text": {
+                        "type": "plain_text",
+                        "text": "Add to GCal",
+                        "emoji": True,
+                    },
+                    "url": event["fields"]["Calendar Link"],
+                    "action_id": "add-to-gcal",
+                }
+            )
         upcoming_events_blocks.append({"type": "actions", "elements": [*buttons]})
 
     return {

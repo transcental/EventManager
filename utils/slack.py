@@ -46,3 +46,8 @@ def create_event(ack: Callable, body: dict[str, Any], client: WebClient):
 @app.action("propose-event")
 def create_event(ack: Callable, body: dict[str, Any], client: WebClient):
     handle_propose_event_btn(ack, body, client)
+
+
+@app.action("add-to-gcal")
+def add_to_gcal(ack: Callable):
+    ack()
