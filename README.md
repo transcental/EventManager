@@ -1,5 +1,8 @@
 # Isabelle
 
+> [!WARNING]
+> # This project has moved to [hackclub/isabelle](https://github.com/hackclub/isabelle). This repository will **not** be updated and is now an archive.
+
 Isabelle is a Slack bot for discovering events in the Hack Club Slack. It provides an easy way for SAD members to add events to the Hack Club [events website](https://events.hackclub.com), members to find events and RSVP to event.
 
 ## Usage
